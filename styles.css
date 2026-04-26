@@ -1261,13 +1261,232 @@ select {
   }
 }
 
+@media (max-width: 760px) {
+  .nav {
+    gap: 16px;
+  }
+
+  .brand {
+    width: 100%;
+  }
+
+  .nav-links {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .nav-links a {
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    text-align: center;
+  }
+
+  .hero-copy h1 {
+    max-width: none;
+    font-size: clamp(2.4rem, 9vw, 3.6rem);
+  }
+
+  .hero-lead,
+  .section-heading p,
+  .split-band__copy p,
+  .cta-panel p,
+  .disclaimer-copy p {
+    font-size: 1rem;
+  }
+
+  .hero-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero-metrics .metric-card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .hero-points li {
+    padding: 14px 16px 14px 34px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .hero-showcase {
+    display: grid;
+    gap: 14px;
+  }
+
+  .showcase-core {
+    order: -1;
+    margin-top: 0;
+  }
+
+  .showcase-card {
+    min-height: 0;
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .comparison-table-wrap {
+    overflow: visible;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .comparison-table,
+  .comparison-table tbody,
+  .comparison-table tr,
+  .comparison-table td {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .comparison-table {
+    min-width: 0;
+  }
+
+  .comparison-table thead {
+    display: none;
+  }
+
+  .comparison-table tbody {
+    display: grid;
+    gap: 14px;
+  }
+
+  .comparison-table tr {
+    display: grid;
+    gap: 12px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background:
+      linear-gradient(180deg, rgba(12, 26, 47, 0.94), rgba(8, 19, 37, 0.84));
+    box-shadow: var(--shadow-md);
+  }
+
+  .comparison-table .is-featured {
+    background:
+      linear-gradient(180deg, rgba(16, 33, 56, 0.96), rgba(8, 19, 37, 0.88));
+  }
+
+  .comparison-table td {
+    display: grid;
+    gap: 6px;
+    padding: 0;
+    border: 0;
+  }
+
+  .comparison-table td::before {
+    color: #93aad0;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .comparison-table td:nth-child(1)::before {
+    content: "Место";
+  }
+
+  .comparison-table td:nth-child(2)::before {
+    content: "Карта";
+  }
+
+  .comparison-table td:nth-child(3)::before {
+    content: "Кэшбэк";
+  }
+
+  .comparison-table td:nth-child(4)::before {
+    content: "Бонус";
+  }
+
+  .comparison-table td:nth-child(5)::before {
+    content: "Обслуживание";
+  }
+
+  .comparison-table td:nth-child(6)::before {
+    content: "Оформление";
+  }
+
+  .table-row td:first-child {
+    box-shadow: none;
+  }
+
+  .comparison-table td:nth-child(6) {
+    margin-top: 4px;
+  }
+
+  .comparison-table td:nth-child(6) .table-link {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .section {
+    padding: 26px 0 66px;
+  }
+
+  .section-heading {
+    margin-bottom: 22px;
+  }
+
+  .review-card,
+  .split-band,
+  .cta-panel,
+  .disclaimer-panel {
+    padding: 22px;
+  }
+
+  .review-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .review-score {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    min-width: 0;
+  }
+
+  .review-score span,
+  .review-score small {
+    display: block;
+  }
+
+  .source-panel,
+  .faq-item {
+    padding: 18px;
+  }
+}
+
 @media (max-width: 640px) {
   .container {
     width: min(100% - 24px, var(--container));
   }
 
+  .hero {
+    padding-bottom: 56px;
+  }
+
+  .eyebrow,
+  .section-kicker,
+  .source-date {
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+  }
+
   .hero-copy h1 {
-    max-width: 10ch;
+    font-size: clamp(2.15rem, 10vw, 3rem);
   }
 
   .button {
@@ -1290,7 +1509,7 @@ select {
 
   .showcase-core {
     margin-top: 18px;
-    padding: 28px;
+    padding: 24px;
   }
 
   .review-card__header {
@@ -1303,6 +1522,72 @@ select {
 
   .comparison-table-wrap {
     border-radius: 24px;
+  }
+
+  .comparison-table tr {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .quick-cta {
+    min-height: 148px;
+    padding: 20px;
+  }
+
+  .footer {
+    padding-bottom: 28px;
+  }
+
+  .footer-inner {
+    gap: 10px;
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .container {
+    width: min(100% - 18px, var(--container));
+  }
+
+  .nav {
+    padding: 14px;
+    border-radius: 22px;
+  }
+
+  .nav-links {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-grid {
+    gap: 22px;
+    padding-top: 24px;
+  }
+
+  .hero-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-metrics .metric-card:last-child {
+    grid-column: auto;
+  }
+
+  .metric-card,
+  .review-box,
+  .mini-panel,
+  .faq-item {
+    padding: 16px;
+  }
+
+  .review-card,
+  .split-band,
+  .cta-panel,
+  .disclaimer-panel {
+    padding: 18px;
+  }
+
+  .showcase-core,
+  .showcase-card {
+    padding: 18px;
   }
 }
 
