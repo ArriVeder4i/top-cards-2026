@@ -32,13 +32,16 @@
 
 html {
   scroll-behavior: smooth;
+  background: #040914;
 }
 
 body {
   margin: 0;
+  min-height: 100vh;
   font-family: "Manrope", sans-serif;
   color: var(--ink);
   line-height: 1.55;
+  background-color: #040914;
   background:
     radial-gradient(circle at 15% 10%, rgba(57, 128, 255, 0.22), transparent 26%),
     radial-gradient(circle at 82% 14%, rgba(29, 230, 181, 0.16), transparent 22%),
