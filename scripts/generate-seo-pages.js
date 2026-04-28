@@ -29,6 +29,29 @@ const bankLinks = {
   }
 };
 
+const otzovikLinks = {
+  tbank: {
+    label: "T-Bank / Black",
+    href: "https://otzovik.com/reviews/t-bank/",
+    text: "Свежие отзывы о Black, категориях кэшбэка, доставке карты и работе поддержки."
+  },
+  alfabank: {
+    label: "Альфа-Банк / Альфа-Карта",
+    href: "https://otzovik.com/reviews/bank_alfa_bank/",
+    text: "Отзывы о дебетовых картах, приложении, начислении кэшбэка и доставке."
+  },
+  vtb: {
+    label: "ВТБ / Карта для жизни",
+    href: "https://otzovik.com/reviews/bank_vtb_24/",
+    text: "Отзывы о карте, обслуживании, бонусах за оформление и повседневном использовании."
+  },
+  ozon: {
+    label: "Ozon Карта",
+    href: "https://otzovik.com/reviews/plastikovaya_karta_ozon_bank/",
+    text: "Отзывы о карте Ozon Банка, скидках на маркетплейсе и кэшбэке вне Ozon."
+  }
+};
+
 function bankButton(bank, label, className = "button button--primary") {
   const link = bankLinks[bank];
   return `<a class="${className}" data-bank="${bank}" href="${link.href}" target="_blank" rel="${link.rel}">${label}</a>`;
@@ -96,6 +119,10 @@ function renderFacts(page) {
 function renderToc(page) {
   const items = [...page.sections.map((section) => ({ id: section.id, label: section.toc || section.title }))];
 
+  if (page.reviewBanks?.length) {
+    items.push({ id: "otzovik", label: "Отзывы на Отзовике" });
+  }
+
   if (page.faq.length) {
     items.push({ id: "faq", label: "FAQ" });
   }
@@ -129,6 +156,43 @@ function renderRelated(page, meta) {
             </article>`;
     })
     .join("\n");
+}
+
+function renderOtzovikSection(page) {
+  if (!page.reviewBanks?.length) {
+    return "";
+  }
+
+  const cards = page.reviewBanks
+    .map((bank) => {
+      const review = otzovikLinks[bank];
+
+      if (!review) {
+        return "";
+      }
+
+      return `            <article class="page-card">
+              <h3>${review.label}</h3>
+              <p>${review.text}</p>
+              <div class="hero-actions">
+                <a class="button button--quiet" href="${review.href}" target="_blank" rel="nofollow noopener">Открыть отзывы на Отзовике</a>
+              </div>
+            </article>`;
+    })
+    .filter(Boolean)
+    .join("\n");
+
+  if (!cards) {
+    return "";
+  }
+
+  return `              <section class="article-section" id="otzovik" data-reveal>
+                <h2>Отзывы на Отзовике</h2>
+                <p>Перед оформлением полезно быстро посмотреть свежие отзывы пользователей: о кэшбэке, бонусах, доставке карты и работе поддержки.</p>
+                <div class="page-card-grid">
+${cards}
+                </div>
+              </section>`;
 }
 
 function renderPage(page, meta) {
@@ -245,6 +309,8 @@ ${renderToc(page)}
 
             <div class="article-stack">
 ${renderSections(page)}
+
+${renderOtzovikSection(page)}
 
               <section class="article-section" id="faq" data-reveal>
                 <h2>FAQ</h2>
@@ -417,7 +483,7 @@ const pages = [
         a: "Если карта бесплатная и удобна сама по себе, да. Если высокая выгода держится только на одном промо, лучше смотреть на совокупность условий."
       }
     ],
-    related: ["best-debit-cards-2026", "which-debit-card-to-choose", "debit-cards-no-maintenance"]
+    related: ["best-debit-cards-2026", "my-debit-card-experience", "debit-cards-no-maintenance"]
   },
   {
     slug: "debit-card-bonus-1000",
@@ -1071,7 +1137,7 @@ const pages = [
         a: "Для основной карты чаще важнее отсутствие лишних расходов и удобство. Кэшбэк становится решающим, когда карта и так комфортна в быту."
       }
     ],
-    related: ["best-debit-cards-2026", "debit-cards-no-maintenance", "cashback-10-percent"]
+    related: ["best-debit-cards-2026", "my-debit-card-experience", "debit-cards-no-maintenance"]
   },
   {
     slug: "best-debit-cards-2026",
@@ -1212,7 +1278,7 @@ const pages = [
         a: "Да, это нормальная стратегия: одну карту оставить основной, а вторую держать под маркетплейс, бонус или отдельные категории."
       }
     ],
-    related: ["which-debit-card-to-choose", "cashback-10-percent", "debit-card-bonus-1000"]
+    related: ["which-debit-card-to-choose", "my-debit-card-experience", "debit-card-bonus-1000"]
   },
   {
     slug: "travel-debit-cards",
@@ -1572,8 +1638,225 @@ const pages = [
       }
     ],
     related: ["debit-card-bonus-1000", "best-debit-cards-2026", "which-debit-card-to-choose"]
+  },
+  {
+    slug: "my-debit-card-experience",
+    title: "Мой опыт с дебетовыми картами: как получать до 50% кэшбэка в 2026",
+    description: "Личный опыт использования дебетовых карт в 2025-2026 годах: где кэшбэк реально выше, почему самые сильные условия дают новым клиентам и как я собираю максимум выгоды.",
+    heading: "Мой опыт использования дебетовых карт - как получать максимум кэшбэка",
+    excerpt: "Живой опыт по Альфе, Ozon, T-Bank и ВТБ с реальным примером почти 50% возврата на акциях.",
+    lead: "В 2025-2026 году я протестировал несколько дебетовых карт разных банков и заметил одну важную вещь: максимальная выгода почти всегда достается новым пользователям или тем, кто давно не пользовался продуктом. Именно на старте банки чаще дают самый сильный кэшбэк, бонусы за оформление и повышенные условия по акциям.",
+    facts: [
+      { value: "до 50%", label: "в отдельных акциях и суммируемых предложениях" },
+      { value: "4 банка", label: "в материале на основе личного сценария" },
+      { value: "1-2 месяца", label: "обычно самые сильные условия держатся ограниченное время" }
+    ],
+    heroButtons: [
+      { href: "../best-debit-cards-2026/", label: "Открыть рейтинг 2026", className: "button button--secondary" },
+      { bank: "tbank", label: "Оформить T-Bank Black", className: "button button--primary" }
+    ],
+    sidebarTitle: "Нужен не обзор, а рабочий сценарий",
+    sidebarText: "Это страница не про абстрактные условия, а про то, как на практике меняется выгода по картам и почему часто выгоднее использовать несколько банков, а не сидеть на одном.",
+    sidebarButtons: [
+      { bank: "tbank", label: "Получить 500 ₽ от T-Bank", className: "button button--primary" },
+      { bank: "vtb", label: "Забрать 1 000 ₽ от ВТБ", className: "button button--secondary" }
+    ],
+    sections: [
+      {
+        id: "intro",
+        title: "Почему максимум выгоды чаще получает новый клиент",
+        html: `
+            <p>По моему опыту, банки в первую очередь борются за новое подключение. Именно поэтому на входе чаще встречаются самые вкусные условия:</p>
+            <ul class="article-list">
+              <li>повышенный кэшбэк в категориях или у партнеров;</li>
+              <li>бонусы за оформление и первую активность по карте;</li>
+              <li>временные подписки и усиленные тарифные опции;</li>
+              <li>повышенная ставка по накопительному счету в связке с картой.</li>
+            </ul>
+            <p>Когда правильно используешь этот момент, фактическая выгода может быть заметно выше, чем кажется по стандартной витрине банка.</p>
+            <div class="content-note">
+              <strong>Главное наблюдение:</strong> банки чаще платят не за многолетнюю лояльность, а за привлечение и реактивацию клиента.
+            </div>`
+      },
+      {
+        id: "insight",
+        title: "Главный инсайт: одна карта почти всегда проигрывает стратегии из нескольких",
+        html: `
+            <p>Самая выгодная стратегия для меня оказалась очень простой: не держаться за один банк и не ждать, что хорошие условия будут вечными.</p>
+            <ol class="article-ordered">
+              <li>Оформляю карту под сильный стартовый оффер или хорошие категории.</li>
+              <li>Использую ее, пока условия действительно выгодны.</li>
+              <li>Когда выгода проседает, переключаюсь на другой банк или карту.</li>
+              <li>Через время возвращаюсь к старому банку, если он снова усиливает оффер. Это работает не всегда, но иногда дает вторую волну выгоды.</li>
+            </ol>
+            <p>Именно переход между картами дает больше всего экономии на длинной дистанции.</p>`
+      },
+      {
+        id: "banks",
+        title: "Мой опыт по банкам",
+        html: `
+            <div class="page-card-grid">
+              <article class="page-card">
+                <h3>Альфа-Банк</h3>
+                <p>Пользовался картой примерно полгода. На старте она мне очень понравилась из-за категорий на супермаркеты и дополнительных заданий внутри приложения.</p>
+                <ul class="article-list">
+                  <li>супермаркеты реально давали ощутимый возврат;</li>
+                  <li>дополнительные задания усиливали обычный кэшбэк;</li>
+                  <li>для повседневных расходов карта выглядела очень достойно.</li>
+                </ul>
+                <p>Минус проявился позже: выгодные категории стали слабее, а общая ценность карты постепенно просела. В какой-то момент я просто перестал видеть смысл держать ее основной.</p>
+                <div class="hero-actions">
+                  <a class="button button--secondary" href="../alfa-debit-card-review/">Подробнее об Альфа-Карте</a>
+                  <a class="button button--primary" data-bank="alfabank" href="https://alfa.me/Uv0Efl" target="_blank" rel="nofollow sponsored noopener">Оформить Альфа-Карту</a>
+                </div>
+              </article>
+              <article class="page-card">
+                <h3>Ozon Банк</h3>
+                <p>После Альфы я частично перешел на Ozon. В моем сценарии она сейчас дает около 3% на супермаркеты уже несколько месяцев подряд.</p>
+                <ul class="article-list">
+                  <li>это не сверхдоходность, но хорошая стабильная база;</li>
+                  <li>как запасная или повседневная карта Ozon ощущается нормально;</li>
+                  <li>особенно она удобна, если вы и так часто покупаете на маркетплейсе.</li>
+                </ul>
+                <p>Для меня это не wow-карта, а скорее спокойный базовый вариант без лишней боли.</p>
+                <div class="hero-actions">
+                  <a class="button button--secondary" href="../best-debit-cards-2026/">Сравнить с другими картами</a>
+                  <a class="button button--primary" data-bank="ozon" href="https://finance.ozon.ru/promo/cards" target="_blank" rel="noopener">Получить Ozon Карту</a>
+                </div>
+              </article>
+              <article class="page-card">
+                <h3>T-Bank</h3>
+                <p>Долго им не пользовался, но недавно вернулся и именно здесь увидел самый сильный всплеск выгоды.</p>
+                <ul class="article-list">
+                  <li>до 23% на доставку продуктов в отдельных акциях;</li>
+                  <li>дополнительные предложения на конкретные магазины;</li>
+                  <li>в моем случае промо и спецпредложения складывались между собой.</li>
+                </ul>
+                <p>На коротком промежутке это дало мне самую сильную доходность из всех карт, которые я использовал за последнее время.</p>
+                <div class="hero-actions">
+                  <a class="button button--secondary" href="../tinkoff-black-2026/">Разбор T-Bank Black</a>
+                  <a class="button button--primary" data-bank="tbank" href="https://tbank.ru/baf/5VUQwL4JWnQ" target="_blank" rel="nofollow sponsored noopener">Получить 500 ₽ от T-Bank</a>
+                </div>
+              </article>
+              <article class="page-card">
+                <h3>ВТБ</h3>
+                <p>С ВТБ у меня был очень типичный сценарий для приветственного периода: сначала карта выглядит намного лучше, чем потом.</p>
+                <ul class="article-list">
+                  <li>на старте было 5% на супермаркеты;</li>
+                  <li>дополнительный плюс давала семейная группа;</li>
+                  <li>потом ставка снизилась примерно до 3%, затем до 1,5%, а дальше интерес почти пропал.</li>
+                </ul>
+                <p>То есть карта может хорошо сработать на входе, но держать ее как бесконечно лучшую не всегда рационально.</p>
+                <div class="hero-actions">
+                  <a class="button button--secondary" href="../debit-card-bonus-1000/">Условия бонуса 1 000 ₽</a>
+                  <a class="button button--primary" data-bank="vtb" href="https://vtb.ru/l/k63b6tp8" target="_blank" rel="nofollow sponsored noopener">Оформить карту ВТБ</a>
+                </div>
+              </article>
+            </div>`
+      },
+      {
+        id: "example",
+        title: "Реальный пример: как у меня получилось почти 50%",
+        html: `
+            <p>Самый сильный кейс у меня получился по T-Bank, когда несколько предложений совпали по времени.</p>
+            <div class="page-card-grid">
+              <article class="page-card">
+                <h3>Потратил</h3>
+                <p><strong>4 533 ₽</strong></p>
+              </article>
+              <article class="page-card">
+                <h3>Получил кэшбэк</h3>
+                <p><strong>2 307 ₽</strong></p>
+              </article>
+              <article class="page-card">
+                <h3>Эффективный возврат</h3>
+                <p><strong>почти 51%</strong></p>
+              </article>
+            </div>
+            <p>Да, это реально почти половина суммы обратно. Но здесь важно не обманывать себя: такой результат получается не каждый месяц, а в точке, где совпали акции, повышенные категории и статус нового или реактивированного клиента.</p>
+            <div class="content-note">
+              <strong>Нюанс:</strong> подобные условия обычно живут ограниченное время, часто около месяца, и затем заметно слабеют.
+            </div>`
+      },
+      {
+        id: "hidden",
+        title: "Что банки обычно не подчеркивают",
+        html: `
+            <ul class="article-list">
+              <li>самые сильные условия чаще всего действуют только в первые месяцы;</li>
+              <li>часть акций рассчитана только на новых клиентов;</li>
+              <li>реально высокий кэшбэк часто завязан на ограниченный период или отдельные категории;</li>
+              <li>после окончания промо карта может быстро стать обычной и перестать быть лучшей.</li>
+            </ul>
+            <p>Поэтому в этой нише важно смотреть не на лояльность к бренду, а на актуальность оффера именно сейчас.</p>`
+      },
+      {
+        id: "strategy",
+        title: "Рабочая стратегия: как я делаю это на практике",
+        html: `
+            <ol class="article-ordered">
+              <li>Держу несколько карт и не пытаюсь выжать все из одной.</li>
+              <li>Ловлю welcome-офферы и сильные категории для новых пользователей.</li>
+              <li>Использую карту как основную, пока выгода действительно заметна.</li>
+              <li>Когда условия становятся слабее, переключаю оборот на другой банк.</li>
+              <li>Через время проверяю, не вернулся ли старый банк с новой волной акций. Иногда это срабатывает.</li>
+            </ol>
+            <p>Это не значит, что нужно открывать все подряд. Работает именно связка из 2-3 нормальных карт с понятными правилами и бесплатным обслуживанием.</p>`
+      },
+      {
+        id: "income",
+        title: "Сколько можно экономить в месяц",
+        html: `
+            <p>По моему опыту, если использовать карты осознанно, картина примерно такая:</p>
+            <ul class="article-list">
+              <li><strong>5-10%</strong> - это реалистичная база на хороших категориях и обычных повседневных покупках;</li>
+              <li><strong>20-50%</strong> - это уже уровень отдельных акций, суммируемых промо и сильного приветственного периода;</li>
+              <li><strong>1 000-5 000 ₽ в месяц</strong> - вполне реальный диапазон экономии, если у вас нормальный бытовой оборот и вы не держитесь за одну карту годами.</li>
+            </ul>`
+      },
+      {
+        id: "summary",
+        title: "Вывод",
+        html: `
+            <p>Мой главный вывод простой: одна карта почти всегда дает меньше, чем стратегия из нескольких карт и внимательного отношения к акциям. Банки конкурируют за привлечение, и этим действительно можно пользоваться себе в плюс.</p>
+            <p>Если хотите повторить мой подход, начинайте с актуальных офферов, не бойтесь менять основной банк и всегда смотрите, где выгода сейчас выше, а не где вы просто привыкли держать карту.</p>`
+      }
+    ],
+    faq: [
+      {
+        q: "Правда ли, что максимальный кэшбэк чаще всего получают новые клиенты?",
+        a: "По моему опыту и по витринам банков это действительно частый сценарий: лучшие офферы чаще привязаны к новому оформлению, первой активности или короткому приветственному периоду."
+      },
+      {
+        q: "Реально ли получать 50% кэшбэка постоянно?",
+        a: "Нет, это скорее исключение на сильных акциях и суммировании промо. Как постоянный уровень стоит ориентироваться на более спокойные цифры."
+      },
+      {
+        q: "Сколько карт имеет смысл держать одновременно?",
+        a: "Обычно достаточно 2-3 карт под разные сценарии: одна как основная, вторая под сильные категории или бонус, третья как экосистемный или акционный вариант."
+      },
+      {
+        q: "Стоит ли уходить с карты, если условия ухудшились?",
+        a: "Если карта перестала давать нормальную выгоду и не нужна вам по другим причинам, да. В этом и состоит вся идея: не сидеть на продукте только по привычке."
+      }
+    ],
+    related: ["best-debit-cards-2026", "tinkoff-black-2026", "alfa-debit-card-review"]
   }
 ];
+
+const reviewBanksBySlug = {
+  "cashback-10-percent": ["tbank", "alfabank", "vtb", "ozon"],
+  "debit-card-bonus-1000": ["tbank", "alfabank", "vtb"],
+  "alfa-debit-card-review": ["alfabank"],
+  "tinkoff-black-2026": ["tbank"],
+  "no-fee-cash-withdrawal": ["tbank", "alfabank", "vtb", "ozon"],
+  "which-debit-card-to-choose": ["tbank", "alfabank", "vtb", "ozon"],
+  "best-debit-cards-2026": ["tbank", "alfabank", "vtb", "ozon"],
+  "travel-debit-cards": ["tbank", "alfabank", "vtb", "ozon"],
+  "debit-cards-no-maintenance": ["tbank", "alfabank", "vtb", "ozon"],
+  "order-debit-card-online": ["tbank", "alfabank", "vtb", "ozon"],
+  "my-debit-card-experience": ["tbank", "alfabank", "vtb", "ozon"]
+};
 
 const pageMeta = Object.fromEntries(
   pages.map((page) => [
@@ -1584,6 +1867,10 @@ const pageMeta = Object.fromEntries(
     }
   ])
 );
+
+pages.forEach((page) => {
+  page.reviewBanks = reviewBanksBySlug[page.slug] || [];
+});
 
 pages.forEach((page) => {
   const dir = path.join(root, page.slug);

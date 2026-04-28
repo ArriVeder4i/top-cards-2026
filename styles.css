@@ -909,6 +909,11 @@ select {
   margin-top: 8px;
 }
 
+.review-box__links {
+  display: grid;
+  gap: 10px;
+}
+
 .review-box a {
   color: var(--ink);
   text-decoration: underline;
