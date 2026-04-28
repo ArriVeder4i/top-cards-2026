@@ -1,4 +1,4 @@
-const VERIFIED_DATE = "25 апреля 2026";
+const VERIFIED_DATE = "28 апреля 2026";
 
 const bankLinks = {
   tbank: {
