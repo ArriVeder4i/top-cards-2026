@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /scripts/
+Disallow: /README.md
 
 Sitemap: https://topdebitcard.ru/sitemap.xml
